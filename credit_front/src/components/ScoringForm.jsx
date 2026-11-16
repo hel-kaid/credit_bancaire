@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Field from "./Field.jsx";
-import { SECTIONS, EMPTY, EXAMPLE, FIELD_NAMES, validateField, validateAll, toPayload } from "../fields.js";
+import { SECTIONS, EMPTY, EXAMPLE, FIELD_NAMES, validateField, validateAll, toPayload, makeExample } from "../fields.js";
 
 export default function ScoringForm({ onSubmit, loading, serverErrors, onFieldEdit, onReset }) {
-  const [values, setValues] = useState(EMPTY);
+  const [values, setValues] = useState(EMPTY); 
   const [touched, setTouched] = useState({});
 
   // Erreur affichée : validation locale en temps réel, sinon erreur renvoyée par l'API.
@@ -28,7 +28,7 @@ export default function ScoringForm({ onSubmit, loading, serverErrors, onFieldEd
   };
 
   const fillExample = () => {
-    setValues(EXAMPLE);
+    setValues(makeExample());
     setTouched({});
   };
   const reset = () => {
@@ -40,13 +40,13 @@ export default function ScoringForm({ onSubmit, loading, serverErrors, onFieldEd
   return (
     <form className="card form" onSubmit={handleSubmit} noValidate>
       <div className="form-head">
-        <h2>Dossier client</h2>
-        <button type="button" className="link" onClick={fillExample}>Remplir un exemple</button>
+        <h2><span className="head-icon" aria-hidden="true">📋</span> Dossier client</h2>
+        <button type="button" className="secondary small" onClick={fillExample}>✨ Remplir un exemple</button>
       </div>
 
-      {SECTIONS.map((section) => (
+      {SECTIONS.map((section, i) => (
         <fieldset key={section.title}>
-          <legend>{section.title}</legend>
+          <legend><span className="step" aria-hidden="true">{i + 1}</span>{section.title}</legend>
           <div className="grid">
             {section.fields.map((f) => (
               <Field key={f.name} field={f} value={values[f.name]} error={errorFor(f.name)}

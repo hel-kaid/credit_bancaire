@@ -56,6 +56,26 @@ export const EXAMPLE = {
   loan_amount: "130", loan_amount_term: "360", property_area: "Semiurban",
 };
 
+const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const randInt = (min, max, step = 1) => min + step * Math.floor(Math.random() * ((max - min) / step + 1));
+
+// Génère un dossier d'exemple aléatoire, dans les limites autorisées par l'API.
+export function makeExample() {
+  return {
+    gender: pick(["Male", "Female"]),
+    married: pick(["Yes", "No"]),
+    dependents: pick(["0", "1", "2", "3"]),
+    education: pick(["Graduate", "Not Graduate"]),
+    self_employed: pick(["Yes", "No"]),
+    credit_history: Math.random() < 0.8 ? "1" : "0",
+    applicant_income: String(randInt(1500, 15000, 100)),
+    coapplicant_income: String(Math.random() < 0.4 ? 0 : randInt(500, 6000, 100)),
+    loan_amount: String(randInt(50, 400, 5)),
+    loan_amount_term: String(pick(TERMS)),
+    property_area: pick(["Urban", "Semiurban", "Rural"]),
+  };
+}
+
 export function validateField(name, raw) {
   const value = String(raw ?? "").trim();
   if (value === "") return "Champ obligatoire";
