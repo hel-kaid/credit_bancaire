@@ -1,3 +1,5 @@
+## python -W ignore credit_bancaire.py
+
 # Credit Scoring API
 
 API FastAPI qui sert le modèle de décision de crédit (Random Forest, `modele_credit.joblib`).
